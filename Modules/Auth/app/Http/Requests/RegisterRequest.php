@@ -16,8 +16,6 @@ class RegisterRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -30,8 +28,6 @@ class RegisterRequest extends FormRequest
 
     /**
      * Get custom messages for validator errors.
-     *
-     * @return array
      */
     public function messages(): array
     {
@@ -55,8 +51,6 @@ class RegisterRequest extends FormRequest
 
     /**
      * Get custom attribute names for validator errors.
-     *
-     * @return array
      */
     public function attributes(): array
     {
