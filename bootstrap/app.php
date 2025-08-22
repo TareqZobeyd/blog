@@ -24,11 +24,21 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
 
-        // Register SuperAdmin middleware alias
+        // Register middleware aliases
         $middleware->alias([
             'super.admin' => \App\Http\Middleware\SuperAdminMiddleware::class,
+            'auth' => \App\Http\Middleware\CustomAuthenticate::class, // اضافه شد
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Exception handling for API authentication
+        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Unauthenticated.',
+                    'result' => null
+                ], 401);
+            }
+        });
     })->create();

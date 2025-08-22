@@ -17,7 +17,6 @@ class Post extends Model
     protected $fillable = [
         'title',
         'img',
-        'slug',
         'content',
         'status',
         'published_at',
@@ -30,6 +29,8 @@ class Post extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+
 
     /**
      * Return the sluggable configuration array for this model.
@@ -60,11 +61,5 @@ class Post extends Model
                     ->withTimestamps();
     }
 
-    /**
-     * Get the route key for the model.
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
+
 }

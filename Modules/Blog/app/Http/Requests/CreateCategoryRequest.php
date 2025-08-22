@@ -3,6 +3,8 @@
 namespace Modules\Blog\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CreateCategoryRequest extends FormRequest
 {
@@ -23,6 +25,21 @@ class CreateCategoryRequest extends FormRequest
         return [
             'name' => 'required|string|max:255|unique:categories,name',
         ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'status' => 'error',
+                'message' => 'خطا در اعتبارسنجی',
+                'errors' => $validator->errors()->toArray(),
+                'result' => null
+            ], 422)
+        );
     }
 
     /**

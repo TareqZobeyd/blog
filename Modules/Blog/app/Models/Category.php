@@ -35,7 +35,7 @@ class Category extends Model
     /**
      * Get the posts that belong to this category.
      */
-    public function categories(): BelongsToMany
+    public function posts(): BelongsToMany  // تغییر از categories() به posts()
     {
         return $this->belongsToMany(Post::class, 'category_post')
                     ->withTimestamps();

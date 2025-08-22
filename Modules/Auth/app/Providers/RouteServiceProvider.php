@@ -51,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
             'prefix' => 'api'
         ]);
 
-        Route::prefix('api')->name('api.')->group(module_path($this->name, '/routes/api.php'));
+        Route::middleware('api')->prefix('api')->name('api.')->group(module_path($this->name, '/routes/api.php'));
 
         \Log::info('Auth RouteServiceProvider: API routes mapped successfully');
     }
