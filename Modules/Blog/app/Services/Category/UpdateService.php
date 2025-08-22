@@ -4,6 +4,7 @@ namespace Modules\Blog\Services\Category;
 
 use Modules\Blog\Http\Requests\UpdateCategoryRequest;
 use Modules\Blog\Models\Category;
+use Modules\Blog\Transformers\CategoryResource;
 
 class UpdateService
 {
@@ -26,7 +27,7 @@ class UpdateService
 
         return [
             'status' => 'success',
-            'result' => $category->fresh(),
+            'result' => new CategoryResource($category->fresh()),
             'message' => 'دسته‌بندی با موفقیت بروزرسانی شد'
         ];
     }

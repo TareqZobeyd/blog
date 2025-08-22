@@ -4,6 +4,7 @@ namespace Modules\Blog\Services\Category;
 
 use Illuminate\Http\Request;
 use Modules\Blog\Models\Category;
+use Modules\Blog\Transformers\CategoryResource;
 
 class ShowService
 {
@@ -33,30 +34,10 @@ class ShowService
 
         return [
             'status' => 'success',
-            'result' => $category,
+            'result' => new CategoryResource($category),
             'message' => 'دسته‌بندی با موفقیت دریافت شد'
         ];
     }
 
-    /**
-     * Execute the show operation by slug
-     */
-    public function showBySlug(string $slug): array
-    {
-        $category = Category::withCount('posts')->where('slug', $slug)->first();
 
-        if (!$category) {
-            return [
-                'status' => 'error',
-                'message' => 'دسته‌بندی یافت نشد',
-                'result' => null
-            ];
-        }
-
-        return [
-            'status' => 'success',
-            'result' => $category,
-            'message' => 'دسته‌بندی با موفقیت دریافت شد'
-        ];
-    }
 }

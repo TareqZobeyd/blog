@@ -4,6 +4,7 @@ namespace Modules\Blog\Services\Category;
 
 use Illuminate\Http\Request;
 use Modules\Blog\Models\Category;
+use Modules\Blog\Transformers\CategoryResource;
 
 class IndexService
 {
@@ -40,7 +41,7 @@ class IndexService
 
         return [
             'status' => 'success',
-            'result' => $categories->items(),
+            'result' => CategoryResource::collection($categories->items()),
             'paginate' => [
                 'current_page' => $categories->currentPage(),
                 'per_page' => $categories->perPage(),

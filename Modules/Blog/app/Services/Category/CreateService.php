@@ -4,6 +4,7 @@ namespace Modules\Blog\Services\Category;
 
 use Modules\Blog\Http\Requests\CreateCategoryRequest;
 use Modules\Blog\Models\Category;
+use Modules\Blog\Transformers\CategoryResource;
 
 class CreateService
 {
@@ -18,7 +19,7 @@ class CreateService
 
         return [
             'status' => 'success',
-            'result' => $category,
+            'result' => new CategoryResource($category),
             'message' => 'دسته‌بندی با موفقیت ایجاد شد'
         ];
     }
