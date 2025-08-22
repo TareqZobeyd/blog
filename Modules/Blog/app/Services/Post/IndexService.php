@@ -5,6 +5,7 @@ namespace Modules\Blog\Services\Post;
 use Illuminate\Http\Request;
 use Modules\Blog\Models\Post;
 use Modules\Blog\Enums\PostStatus;
+use Modules\Blog\Transformers\PostResource;
 
 class IndexService
 {
@@ -36,10 +37,10 @@ class IndexService
         }
 
         // Apply category filter
-        if ($this->request->has('category_id')) {
-            $categoryId = $this->request->get('category_id');
-            $query->whereHas('categories', function($q) use ($categoryId) {
-                $q->where('categories.id', $categoryId);
+        if ($this->request->has('category')) {
+            $categoryName = $this->request->get('category');
+            $query->whereHas('categories', function($q) use ($categoryName) {
+                $q->where('categories.name', 'like', "%{$categoryName}%");
             });
         }
 
@@ -47,7 +48,7 @@ class IndexService
 
         return [
             'status' => 'success',
-            'result' => $posts->items(),
+            'result' => PostResource::collection($posts->items()),
             'paginate' => [
                 'current_page' => $posts->currentPage(),
                 'per_page' => $posts->perPage(),

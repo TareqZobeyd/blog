@@ -4,6 +4,7 @@ namespace Modules\Blog\Services\Post;
 
 use Modules\Blog\Models\Post;
 use Modules\Blog\Enums\PostStatus;
+use Modules\Blog\Transformers\PostResource;
 
 class ShowService
 {
@@ -26,7 +27,7 @@ class ShowService
 
         return [
             'status' => 'success',
-            'result' => $post
+            'result' => new PostResource($post)
         ];
     }
 

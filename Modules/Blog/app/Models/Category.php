@@ -6,6 +6,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Blog\Database\Factories\CategoryFactory;
 
 class Category extends Model
 {
@@ -35,9 +36,17 @@ class Category extends Model
     /**
      * Get the posts that belong to this category.
      */
-    public function posts(): BelongsToMany  // تغییر از categories() به posts()
+    public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'category_post')
                     ->withTimestamps();
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     */
+    protected static function newFactory()
+    {
+        return CategoryFactory::new();
     }
 }

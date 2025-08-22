@@ -24,7 +24,7 @@ class PostResource extends JsonResource
                 'label' => $this->status->label(),
                 'color' => $this->status->color(),
             ],
-            'img' => $this->img,
+            'img' => $this->img ? url('storage/' . $this->img) : null,
             'published_at' => $this->published_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
