@@ -22,7 +22,13 @@ class CategoryController extends Controller
     {
         $result = app(IndexService::class)->request($request)->index();
         
-        return response()->json($result);
+        // Return appropriate status code based on result
+        if ($result['status'] === 'success') {
+            return response()->json($result, 200);
+        }
+        
+        // If there's an error, return 400
+        return response()->json($result, 400);
     }
 
     /**
@@ -32,7 +38,12 @@ class CategoryController extends Controller
     {
         $result = app(CreateService::class)->create($request);
         
-        return response()->json($result, $result['status'] === 'success' ? 201 : 400);
+        if ($result['status'] === 'success') {
+            return response()->json($result, 201);
+        }
+        
+        // Return 422 for business logic errors
+        return response()->json($result, 422);
     }
 
     /**
@@ -52,7 +63,12 @@ class CategoryController extends Controller
     {
         $result = app(UpdateService::class)->update($request, $category);
         
-        return response()->json($result, $result['status'] === 'success' ? 200 : 400);
+        if ($result['status'] === 'success') {
+            return response()->json($result, 200);
+        }
+        
+        // Return 422 for validation errors or business logic errors
+        return response()->json($result, 422);
     }
 
     /**
@@ -62,6 +78,10 @@ class CategoryController extends Controller
     {
         $result = app(DeleteService::class)->request($request)->delete($category);
         
-        return response()->json($result, $result['status'] === 'success' ? 200 : 400);
+        if ($result['status'] === 'success') {
+            return response()->json(null, 204);
+        }
+        
+        return response()->json($result, 400);
     }
 }

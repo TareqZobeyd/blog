@@ -21,8 +21,14 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $result = app(IndexService::class)->request($request)->index();
-        
-        return response()->json($result);
+
+        // Return appropriate status code based on result
+        if ($result['status'] === 'success') {
+            return response()->json($result, 200);
+        }
+
+        // If there's an error, return 400
+        return response()->json($result, 400);
     }
 
     /**
@@ -31,8 +37,13 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         $result = app(CreateService::class)->create($request);
-        
-        return response()->json($result, $result['status'] === 'success' ? 201 : 400);
+
+        if ($result['status'] === 'success') {
+            return response()->json($result, 201);
+        }
+
+        // Return 422 for business logic errors
+        return response()->json($result, 422);
     }
 
     /**
@@ -41,7 +52,7 @@ class PostController extends Controller
     public function show(Request $request, Post $post)
     {
         $result = app(ShowService::class)->show($post->id);
-        
+
         return response()->json($result, $result['status'] === 'success' ? 200 : 404);
     }
 
@@ -51,8 +62,13 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
         $result = app(UpdateService::class)->update($request, $post);
-        
-        return response()->json($result, $result['status'] === 'success' ? 200 : 400);
+
+        if ($result['status'] === 'success') {
+            return response()->json($result, 200);
+        }
+
+        // Return 422 for validation errors or business logic errors
+        return response()->json($result, 422);
     }
 
     /**
@@ -61,8 +77,12 @@ class PostController extends Controller
     public function destroy(Request $request, Post $post)
     {
         $result = app(DeleteService::class)->delete($post);
-        
-        return response()->json($result, $result['status'] === 'success' ? 200 : 400);
+
+        if ($result['status'] === 'success') {
+            return response()->json(null, 204);
+        }
+
+        return response()->json($result, 400);
     }
 }
 
