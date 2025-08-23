@@ -14,7 +14,7 @@ class CreateService
     public function create(CreateCategoryRequest $request): array
     {
         $validatedData = $request->validated();
-        
+
         $category = Category::create($validatedData);
 
         return [

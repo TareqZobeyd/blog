@@ -26,3 +26,4 @@ class CategoryCollection extends ResourceCollection
     }
 }
 
+

@@ -12,12 +12,11 @@ class CustomAuthenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        // اگر API request باشد، redirect نکن
         if ($request->expectsJson() || $request->is('api/*')) {
             return null;
         }
 
-        // برای web requests، به login redirect کن
         return route('login');
     }
 }
+

@@ -27,3 +27,4 @@ class PostCollection extends ResourceCollection
         ];
     }
 }
+

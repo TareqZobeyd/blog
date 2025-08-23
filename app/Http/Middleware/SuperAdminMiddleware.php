@@ -35,3 +35,4 @@ class SuperAdminMiddleware
         return $next($request);
     }
 }
+

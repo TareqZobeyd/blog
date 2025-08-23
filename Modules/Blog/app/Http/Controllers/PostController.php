@@ -65,3 +65,4 @@ class PostController extends Controller
         return response()->json($result, $result['status'] === 'success' ? 200 : 400);
     }
 }
+
